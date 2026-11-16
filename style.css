@@ -1,0 +1,55 @@
+/* スタイルの初期化 */
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.header {
+    padding: 0px 20px;
+    height: 80px;
+    background-color: rebeccapurple;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header a {
+    text-decoration: none; /* リンクの下線の無効化 */
+    color: #fff;
+}
+
+.header-title {
+   color: #FFFFFF;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: flex-end; /* ナビゲーションの水平方向の配置 */
+}
+
+.nav-list {
+  margin-left: 55px; /* ナビゲーション間の間隔 */
+}
+
+h1 {font-size:32px;}
+li {font-size:15px;}
+
+#beforeScore {
+    display:block;
+    width: 80%;
+    max-width: 794px;
+    min-height: 1123px;
+
+    margin: 20px auto;
+    border: 1px solid black;
+}
+
+#afterScore {
+    display:none;
+    width: 80%;
+    max-width: 794px;
+    min-height: 1123px;
+
+    margin: 20px auto;
+    border: 1px solid black;
+}

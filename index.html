@@ -6,7 +6,30 @@
     <title>音部変換</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay/build/opensheetmusicdisplay.min.js"></script>
 <body>
-    
+    <div class="container">
+        <header class="header">
+            <h1 class="header-title"><a href="#home">音部変換サイト</a></h1>
+            <nav  class="header-nav">
+                <ul class="header-nav">
+                    <button id="showBefore">変換前</button>
+                    <button id="showAfter">変換後</button>
+                    <!-- <li class="nav-list"><a href="#about">About</a></li> 
+                    <li class="nav-list"><a href="#service">Service</a></li>
+                    <li class="nav-list"><a href="#contents">Contents</a></li> -->
+                    <input type="file" id="fileInput" accept=".mxl">
+                    
+                </ul>
+            </nav>
+        </header>
+    <div>
+    <h2></h2>
+        <div id="beforeScore"></div>
+
+    <h2></h2>
+        <div id="afterScore"></div>
+    <script src="script.js"></script>
 </body>
 </html>
