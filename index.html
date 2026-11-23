@@ -14,11 +14,18 @@
             <h1 class="header-title"><a href="#home">音部変換サイト</a></h1>
             <nav  class="header-nav">
                 <ul class="header-nav">
-                    <button id="showBefore">変換前</button>
+                    <select id="sourceClef">
+                        <option value="treble">ト音記号</option>
+                        <option value="alto">ハ音記号</option>
+                        <option value="bass">ヘ音記号</option>
+                    </select>
+
+                    ↓
+
                     <select id="targetClef">
-                    <option value="treble">ト音記号</option>
-                    <option value="alto">ハ音記号</option>
-                    <option value="bass">ヘ音記号</option>
+                        <option value="treble">ト音記号</option>
+                        <option value="alto">ハ音記号</option>
+                        <option value="bass">ヘ音記号</option>
                     </select>
 
                     <!-- <li class="nav-list"><a href="#about">About</a></li> 

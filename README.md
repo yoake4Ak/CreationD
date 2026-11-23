@@ -1,13 +1,11 @@
 ## CreationD
 創成Dチーム5
 Gitコマンド
-## メインブランチを更新する
-git switch main
+##　メインブランチを更新
 git pull
 
-## 自分のブランチをmainで更新する
-自分のブランチに移動した後に
-git merge main
+## ブランチをメインに移動
+git switch main
 
 ## ブランチを作って切り替える
 git switch -c <ブランチ名>
