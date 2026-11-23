@@ -65,18 +65,18 @@ function convertFromTreble(xmlText, target) {
 
     let sign = "G";
     let line = "2";
-    let octaveShift = 0;
+    let octaveShift = 0;//ト音
     //
     if (target === "alto") {
         sign = "C";
         line = "3";
-        octaveShift = -1;
+        octaveShift = -1;//ハ音
     }
-    //ヘ音
+    //
     if (target === "bass") {
         sign = "F";
         line = "4";
-        octaveShift = -2;
+        octaveShift = -2;//ヘ音
     }
 
     const clefs = doc.getElementsByTagName("clef");
@@ -115,18 +115,18 @@ function convertFromAlto(xmlText, target) {
 
     let sign = "G";
     let line = "2";
-    let octaveShift = 0;
+    let octaveShift = 1;
     //
     if (target === "alto") {
         sign = "C";
         line = "3";
-        octaveShift = -1;
+        octaveShift = 0;
     }
     //ヘ音
     if (target === "bass") {
         sign = "F";
         line = "4";
-        octaveShift = -2;
+        octaveShift = -1;
     }
 
     const clefs = doc.getElementsByTagName("clef");
@@ -165,18 +165,18 @@ function convertFromBass(xmlText, target) {
 
     let sign = "G";
     let line = "2";
-    let octaveShift = 0;
+    let octaveShift = 2;
     //
     if (target === "alto") {
         sign = "C";
         line = "3";
-        octaveShift = -1;
+        octaveShift = 1;
     }
     //ヘ音
     if (target === "bass") {
         sign = "F";
         line = "4";
-        octaveShift = -2;
+        octaveShift = 0;
     }
 
     const clefs = doc.getElementsByTagName("clef");
