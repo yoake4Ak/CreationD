@@ -21,18 +21,17 @@ const afterOsmd =
 // 変換前の表示切替
 const showBefore = document.getElementById("showBefore");
 
-//ヘ音
+//変換元
+const sourceClef =
+    document.getElementById("sourceClef");
+
+//変換先
 const targetClef = document.getElementById("targetClef");
 
 let currentXml = "";
 
-/* 変換後の表示切替
-const showAfter =
-    document.getElementById("showAfter");
-*/
 // =====================
 // 音部変換用
-// ト音記号 → ヘ音記号
 // =====================
 
 const STEPS = ["C", "D", "E", "F", "G", "A", "B"];
@@ -59,44 +58,38 @@ function indexToPitch(index) {
     };
 }
 
-function convertClef(xmlText, target) {
+//ト音の変換パターン(完成済み)
+function convertFromTreble(xmlText, target) {
 
-    const doc =
-        new DOMParser().parseFromString(
-            xmlText,
-            "application/xml"
-        );
+    const doc = new DOMParser().parseFromString(xmlText,"application/xml");
 
     let sign = "G";
     let line = "2";
     let octaveShift = 0;
-
+    //
     if (target === "alto") {
         sign = "C";
         line = "3";
         octaveShift = -1;
     }
-
+    //ヘ音
     if (target === "bass") {
         sign = "F";
         line = "4";
         octaveShift = -2;
     }
 
-    const clefs =
-        doc.getElementsByTagName("clef");
+    const clefs = doc.getElementsByTagName("clef");
 
     for (const clef of clefs) {
 
         clef.replaceChildren();
 
-        const signEl =
-            doc.createElement("sign");
+        const signEl = doc.createElement("sign");
 
         signEl.textContent = sign;
 
-        const lineEl =
-            doc.createElement("line");
+        const lineEl = doc.createElement("line");
 
         lineEl.textContent = line;
 
@@ -104,14 +97,111 @@ function convertClef(xmlText, target) {
         clef.appendChild(lineEl);
     }
 
-    const octaves =
-        doc.getElementsByTagName("octave");
+    const octaves = doc.getElementsByTagName("octave");
 
     for (const octave of octaves) {
 
-        octave.textContent =
-            Number(octave.textContent)
-            + octaveShift;
+        octave.textContent = Number(octave.textContent) + octaveShift;
+    }
+
+    return new XMLSerializer()
+        .serializeToString(doc);
+}
+
+//ハ音の変換パターン（未調整）
+function convertFromAlto(xmlText, target) {
+
+    const doc = new DOMParser().parseFromString(xmlText,"application/xml");
+
+    let sign = "G";
+    let line = "2";
+    let octaveShift = 0;
+    //
+    if (target === "alto") {
+        sign = "C";
+        line = "3";
+        octaveShift = -1;
+    }
+    //ヘ音
+    if (target === "bass") {
+        sign = "F";
+        line = "4";
+        octaveShift = -2;
+    }
+
+    const clefs = doc.getElementsByTagName("clef");
+
+    for (const clef of clefs) {
+
+        clef.replaceChildren();
+
+        const signEl = doc.createElement("sign");
+
+        signEl.textContent = sign;
+
+        const lineEl = doc.createElement("line");
+
+        lineEl.textContent = line;
+
+        clef.appendChild(signEl);
+        clef.appendChild(lineEl);
+    }
+
+    const octaves = doc.getElementsByTagName("octave");
+
+    for (const octave of octaves) {
+
+        octave.textContent = Number(octave.textContent) + octaveShift;
+    }
+
+    return new XMLSerializer()
+        .serializeToString(doc);
+}
+
+//ヘ音の変換パターン（未調整）
+function convertFromBass(xmlText, target) {
+
+    const doc = new DOMParser().parseFromString(xmlText,"application/xml");
+
+    let sign = "G";
+    let line = "2";
+    let octaveShift = 0;
+    //
+    if (target === "alto") {
+        sign = "C";
+        line = "3";
+        octaveShift = -1;
+    }
+    //ヘ音
+    if (target === "bass") {
+        sign = "F";
+        line = "4";
+        octaveShift = -2;
+    }
+
+    const clefs = doc.getElementsByTagName("clef");
+
+    for (const clef of clefs) {
+
+        clef.replaceChildren();
+
+        const signEl = doc.createElement("sign");
+
+        signEl.textContent = sign;
+
+        const lineEl = doc.createElement("line");
+
+        lineEl.textContent = line;
+
+        clef.appendChild(signEl);
+        clef.appendChild(lineEl);
+    }
+
+    const octaves = doc.getElementsByTagName("octave");
+
+    for (const octave of octaves) {
+
+        octave.textContent = Number(octave.textContent) + octaveShift;
     }
 
     return new XMLSerializer()
@@ -119,11 +209,11 @@ function convertClef(xmlText, target) {
 }
 
 // 変換前ボタンが押されたら変換前の楽譜を表示する
-showBefore.addEventListener("click", function () {
-
-    beforeScore.style.display = "block";
-    afterScore.style.display = "none";
-
+// 左のプルダウンに変更があったときに楽譜を表示
+sourceClef.addEventListener("change", function() {
+    beforeScore.style.display = "block";//変換前表示
+    afterScore.style.display = "none";//変換後非表示
+  
 });
 
 
@@ -151,40 +241,62 @@ fileInput.addEventListener("change", async function (e) {
         await zip.files[xmlName].async("string");
         currentXml = xmlText;
     console.log(xmlText);
+
     // =====================
     // 変換前表示
     // =====================
     await beforeOsmd.load(xmlText);
     beforeOsmd.render();
 
-    // =====================
-    // 音部変換
-    // =====================
-    const convertedXml =
-        convertClef(
-            currentXml,
-            targetClef.value
-        );
+});
 
-    // =====================
-    // 変換後表示
-    // =====================
-    await afterOsmd.load(convertedXml);
-    afterOsmd.render();
+//プルダウンごとの音部変換・表示の起動処理
+// =====================
+// 音部変換
+sourceClef.addEventListener("change", async function() {
+    // 楽譜が読み込まれていない場合は終了
+    if (!currentXml) return;
+
+    //ト音が選択された場合
+    if (sourceClef.value === "treble") {
+
+        const convertedXml =convertFromTreble(currentXml,targetClef.value);
+        //変換後表示
+        await afterOsmd.load(convertedXml);
+        afterOsmd.render();//楽譜描画
+
+    }
+
+    //ハ音が選択された場合
+    if (sourceClef.value === "alto") {
+
+        const convertedXml =convertFromAlto(currentXml,targetClef.value);
+        //変換後表示
+        await afterOsmd.load(convertedXml);
+        afterOsmd.render();
+
+    }
+
+    //ヘ音が選択された場合
+    if (sourceClef.value === "bass") {
+
+        const convertedXml =convertFromBass(currentXml,targetClef.value);
+        //変換後表示
+        await afterOsmd.load(convertedXml);
+        afterOsmd.render();
+
+    }
 
 });
 
-targetClef.addEventListener(
-    "change",
-    async function () {
+targetClef.addEventListener("change",async function () {
 
         if (!currentXml) return;
+        
+        // ト音が選択された場合
+        if (sourceClef.value === "treble") {
 
-        const convertedXml =
-            convertClef(
-                currentXml,
-                targetClef.value
-            );
+        const convertedXml = convertFromTreble(currentXml,targetClef.value);
 
         await afterOsmd.load(convertedXml);
 
@@ -192,6 +304,33 @@ targetClef.addEventListener(
 
         beforeScore.style.display = "none";
         afterScore.style.display = "block";
+        }
+
+        // ハ音が選択された場合
+        if (sourceClef.value === "alto") {
+
+        const convertedXml = convertFromAlto(currentXml,targetClef.value);
+
+        await afterOsmd.load(convertedXml);
+
+        afterOsmd.render();
+
+        beforeScore.style.display = "none";
+        afterScore.style.display = "block";
+        }
+
+        // ヘ音が選択された場合
+        if (sourceClef.value === "bass") {
+
+        const convertedXml = convertFromBass(currentXml,targetClef.value);
+
+        await afterOsmd.load(convertedXml);
+
+        afterOsmd.render();
+
+        beforeScore.style.display = "none";
+        afterScore.style.display = "block";
+        }
     }
 );
 
