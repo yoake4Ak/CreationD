@@ -19,13 +19,17 @@ const afterOsmd =
     new opensheetmusicdisplay.OpenSheetMusicDisplay("afterScore");
 
 // 変換前の表示切替
-const showBefore =
-    document.getElementById("showBefore");
+const showBefore = document.getElementById("showBefore");
 
-// 変換後の表示切替
+//ヘ音
+const targetClef = document.getElementById("targetClef");
+
+let currentXml = "";
+
+/* 変換後の表示切替
 const showAfter =
     document.getElementById("showAfter");
-
+*/
 // =====================
 // 音部変換用
 // ト音記号 → ヘ音記号
@@ -55,7 +59,7 @@ function indexToPitch(index) {
     };
 }
 
-function convertTrebleToBass(xmlText) {
+function convertClef(xmlText, target) {
 
     const doc =
         new DOMParser().parseFromString(
@@ -63,38 +67,22 @@ function convertTrebleToBass(xmlText) {
             "application/xml"
         );
 
-    // 音符位置を移動
-    const pitches =
-        doc.getElementsByTagName("pitch");
+    let sign = "G";
+    let line = "2";
+    let octaveShift = 0;
 
-    for (const pitch of pitches) {
-
-        const stepEl =
-            pitch.getElementsByTagName("step")[0];
-
-        const octaveEl =
-            pitch.getElementsByTagName("octave")[0];
-
-        if (!stepEl || !octaveEl) {
-            continue;
-        }
-
-        const oldIndex =
-            pitchToIndex(
-                stepEl.textContent,
-                Number(octaveEl.textContent)
-            );
-
-        const result =
-            indexToPitch(
-                oldIndex + CLEF_SHIFT
-            );
-
-        stepEl.textContent = result.step;
-        octaveEl.textContent = result.octave;
+    if (target === "alto") {
+        sign = "C";
+        line = "3";
+        octaveShift = -1;
     }
 
-    // 音部記号をヘ音記号へ変更
+    if (target === "bass") {
+        sign = "F";
+        line = "4";
+        octaveShift = -2;
+    }
+
     const clefs =
         doc.getElementsByTagName("clef");
 
@@ -102,16 +90,28 @@ function convertTrebleToBass(xmlText) {
 
         clef.replaceChildren();
 
-        const sign =
+        const signEl =
             doc.createElement("sign");
-        sign.textContent = "F";
 
-        const line =
+        signEl.textContent = sign;
+
+        const lineEl =
             doc.createElement("line");
-        line.textContent = "4";
 
-        clef.appendChild(sign);
-        clef.appendChild(line);
+        lineEl.textContent = line;
+
+        clef.appendChild(signEl);
+        clef.appendChild(lineEl);
+    }
+
+    const octaves =
+        doc.getElementsByTagName("octave");
+
+    for (const octave of octaves) {
+
+        octave.textContent =
+            Number(octave.textContent)
+            + octaveShift;
     }
 
     return new XMLSerializer()
@@ -126,13 +126,7 @@ showBefore.addEventListener("click", function () {
 
 });
 
-// 変換後ボタンが押されたら変換後の楽譜を表示する
-showAfter.addEventListener("click", function () {
 
-    beforeScore.style.display = "none";
-    afterScore.style.display = "block";
-
-});
 
 // MXLファイルが選択されたときの処理
 fileInput.addEventListener("change", async function (e) {
@@ -155,7 +149,8 @@ fileInput.addEventListener("change", async function (e) {
     // 楽譜本体のXMLを文字列として取得する
     const xmlText =
         await zip.files[xmlName].async("string");
-
+        currentXml = xmlText;
+    console.log(xmlText);
     // =====================
     // 変換前表示
     // =====================
@@ -166,7 +161,10 @@ fileInput.addEventListener("change", async function (e) {
     // 音部変換
     // =====================
     const convertedXml =
-        convertTrebleToBass(xmlText);
+        convertClef(
+            currentXml,
+            targetClef.value
+        );
 
     // =====================
     // 変換後表示
@@ -175,3 +173,25 @@ fileInput.addEventListener("change", async function (e) {
     afterOsmd.render();
 
 });
+
+targetClef.addEventListener(
+    "change",
+    async function () {
+
+        if (!currentXml) return;
+
+        const convertedXml =
+            convertClef(
+                currentXml,
+                targetClef.value
+            );
+
+        await afterOsmd.load(convertedXml);
+
+        afterOsmd.render();
+
+        beforeScore.style.display = "none";
+        afterScore.style.display = "block";
+    }
+);
+
