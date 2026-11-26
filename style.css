@@ -6,9 +6,10 @@
 }
 
 .header {
+    position: relative;
     padding: 0px 20px;
     height: 80px;
-    background-color: rebeccapurple;
+    background-color: rgb(59, 59, 59);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -17,16 +18,27 @@
 .header a {
     text-decoration: none; /* リンクの下線の無効化 */
     color: #fff;
+    font-weight: 400;
+    
 }
 
 .header-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 750;
+    letter-spacing: 3px;
    color: #FFFFFF;
+
 }
 
 .header-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: flex-end; /* ナビゲーションの水平方向の配置 */
+    align-items: center;
+    gap: 15px;
 }
+
 
 .nav-list {
   margin-left: 55px; /* ナビゲーション間の間隔 */
@@ -34,6 +46,74 @@
 
 h1 {font-size:32px;}
 li {font-size:15px;}
+
+.file-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #393939;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+
+    white-space: nowrap; /* 改行禁止 */
+    position: relative;
+    right: -30px; /* 左へ30px移動 */
+}
+
+.file-btn:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.output-btn {
+    position: relative;
+    left: 30px;  /* 右へ30px */
+}
+
+#sourceClef,
+#targetClef {
+    background-color: #393939;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 10px 15px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    transition: 0.3s;
+}
+
+#sourceClef:hover,
+#targetClef:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#sourceClef:focus,
+#targetClef:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+.clef-arrow {
+    color: white;
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0 10px;
+}
+
+
+#sourceClef,
+#targetClef,
+.file-btn {
+    height: 42px;
+    box-sizing: border-box;
+}
 
 #beforeScore {
     display:block;
@@ -55,6 +135,3 @@ li {font-size:15px;}
     border: 1px solid black;
 }
 
-.clef-arrow {
-    color: white;
-}
