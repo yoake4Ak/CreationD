@@ -208,6 +208,88 @@ function convertFromBass(xmlText, target) {
         .serializeToString(doc);
 }
 
+// PDFに表示するオクターブ変換量を検査
+function getOctaveLabel(source, target) {
+
+    if (source === "treble" && target === "alto") return "+1";
+    if (source === "treble" && target === "bass") return "+2";
+
+    if (source === "alto" && target === "treble") return "-1";
+    if (source === "alto" && target === "bass") return "+1";
+
+    if (source === "bass" && target === "treble") return "-2";
+    if (source === "bass" && target === "alto") return "-1";
+
+    return "0";
+}
+
+// PDF出力処理
+async function exportPDF() {
+    // 変換後の楽譜を画像に変換
+    const canvas = await html2canvas(afterScore, {scale: 1,backgroundColor: "#ffffff"});
+    // PDF作成用のライブラリjsPDFを準備
+    const { jsPDF } = window.jspdf;
+    //A4縦向き,mm単位の用紙設定
+    const pdf = new jsPDF({orientation: "portrait",unit: "mm",format: "a4"});
+    // A4用紙のサイズを保存
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    //余白の設定
+    const margin = 12;
+    //楽譜自体の横幅
+    const imgWidth = pageWidth - margin * 2;
+    //解像度倍率設定
+    const scale = imgWidth / canvas.width;
+    // 1ページ分の縦幅
+    const sliceHeight = (pageHeight - margin * 2) / scale;
+    //切り取り開始位置
+    let position = 0;
+
+    while (position < canvas.height){// 1ページ縦幅と残りの全体縦幅を比較
+        const currentHeight = Math.min(sliceHeight,canvas.height - position);
+        // 1ページ分の画像を入れるキャンバスを作成
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        //縦の長さの小数点以下切り上げ
+        pageCanvas.height = Math.ceil(currentHeight);
+        //描画可能状態に変更
+        const ctx = pageCanvas.getContext("2d");
+        //切り取り
+        ctx.drawImage(canvas,0, position,canvas.width,
+             currentHeight,0, 0,canvas.width, currentHeight);
+        // 切り取った画像をPNG形式に変換
+        const imgData = pageCanvas.toDataURL("image/jpng",0.8);
+        // PDFに画像を貼り付け
+        pdf.addImage(imgData,"JPNG",margin,margin,imgWidth,currentHeight * scale);
+        
+        //オクターブ表示
+        if (position === 0) {
+            pdf.setFontSize(33);
+            pdf.setTextColor(0, 0, 0);
+
+            const octaveLabel = getOctaveLabel(sourceClef.value,targetClef.value);
+
+            pdf.text(octaveLabel, 22, 55);
+        }
+        // 次の切り取り位置へ移動
+        position += currentHeight;
+        // 画像が残っていれば次のページを追加
+        if (position < canvas.height) {
+            pdf.addPage();
+        }
+    }
+    // PDFを保存
+    pdf.save("変換後の楽譜.pdf");
+}
+
+// PDF出力ボタンを取得
+const pdfButton = document.getElementById("pdfButton");
+
+// ボタンが押されたらPDF出力
+pdfButton.addEventListener("click", exportPDF);
+
+
+
 // 変換前ボタンが押されたら変換前の楽譜を表示する
 // 左のプルダウンに変更があったときに楽譜を表示
 sourceClef.addEventListener("change", function() {

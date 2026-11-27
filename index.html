@@ -6,8 +6,11 @@
     <title>音部変換</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<!--ライブラリ-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay/build/opensheetmusicdisplay.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <body>
     <div class="container">
         <header class="header">
@@ -32,6 +35,8 @@
                     <li class="nav-list"><a href="#service">Service</a></li>
                     <li class="nav-list"><a href="#contents">Contents</a></li> -->
                     <input type="file" id="fileInput" accept=".mxl">
+
+                    <button id="pdfButton">PDF出力</button>
                     
                 </ul>
             </nav>
@@ -43,5 +48,6 @@
     <h2></h2>
         <div id="afterScore"></div>
     <script src="script.js"></script>
+
 </body>
 </html>
