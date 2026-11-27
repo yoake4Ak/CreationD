@@ -241,7 +241,7 @@ async function exportPDF() {
     //解像度倍率設定
     const scale = imgWidth / canvas.width;
     // 1ページ分の縦幅
-    const sliceHeight = (pageHeight - margin * 2) / scale;
+    const sliceHeight = (pageHeight - margin * 2) / scale -60;
     //切り取り開始位置
     let position = 0;
 
@@ -264,7 +264,7 @@ async function exportPDF() {
         
         //オクターブ表示
         if (position === 0) {
-            pdf.setFontSize(33);
+            pdf.setFontSize(15);
             pdf.setTextColor(0, 0, 0);
 
             const octaveLabel = getOctaveLabel(sourceClef.value,targetClef.value);
@@ -283,10 +283,10 @@ async function exportPDF() {
 }
 
 // PDF出力ボタンを取得
-const pdfButton = document.getElementById("pdfButton");
+const fileOutput = document.getElementById("fileOutput");
 
 // ボタンが押されたらPDF出力
-pdfButton.addEventListener("click", exportPDF);
+fileOutput.addEventListener("click", exportPDF);
 
 
 

@@ -11,19 +11,18 @@
 <!--ライブラリ-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay/build/opensheetmusicdisplay.min.js"></script>
-<<<<<<< HEAD
-
-=======
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
->>>>>>> b4fd9bb27724ea22c0cd05f9c402ef8acf0ee13a
+
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="header-title"><a href="#home"> CLC Shift</a></h1>
+            <h1 class="header-title"><a href="#home"> CLT Shift</a></h1>
+            <!--<img src="images/app.svg" class="title-icon">-->
             <nav class="header-nav">
                 <ul class="header-nav">
                     <select id="sourceClef">
+                        <option value="" selected disabled>Before</option>
                         <option value="treble">𝄞 Treble</option>
                         <option value="alto">𝄡 Alto</option>
                         <option value="bass">𝄢 Bass</option>
@@ -32,6 +31,7 @@
                     <span class="clef-arrow">→</span>
 
                     <select id="targetClef">
+                        <option value="" selected disabled>After</option>
                         <option value="treble">𝄞 Treble</option>
                         <option value="alto">𝄡 Alto</option>
                         <option value="bass">𝄢 Bass</option>
@@ -42,32 +42,28 @@
                     <li class="nav-list"><a href="#contents">Contents</a></li> -->
                     <input type="file" id="fileInput" accept=".mxl" hidden>
                     <label for="fileInput" class="file-btn">
+                        <img src="images/open.svg" class="btn-icon">
                         File Input
                     </label>
 
-                    <label for="fileOutput" class="file-btn output-btn">
-                        File Output
+
+                    <label id="fileOutput" class="file-btn output-btn">
+                        <img src="images/download.svg" class="btn-icon">
+                        Download
                     </label>
                 </ul>
             </nav>
         </header>
         <div>
             <h2></h2>
-            <div id="beforeScore"></div>
+                <div id="beforeScore"></div>
 
-<<<<<<< HEAD
             <h2></h2>
-            <div id="afterScore"></div>
+                <div id="afterScore"></div>
             <script src="script.js"></script>
             <footer class="footer">
-    <p>© 2026 CLC | Clef Trans Converter</p>
-</footer>
-=======
-    <h2></h2>
-        <div id="afterScore"></div>
-    <script src="script.js"></script>
-
->>>>>>> b4fd9bb27724ea22c0cd05f9c402ef8acf0ee13a
+                <p>© 2026 CLC | Clef Convert Shift</p>
+            </footer>
 </body>
 
 </html>

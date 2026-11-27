@@ -9,6 +9,12 @@ body {
     background-color: #e8e3e0;
 }
 
+.title-icon {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
 #beforeScore,
 #afterScore {
     display: block;
@@ -19,7 +25,7 @@ body {
     margin: 20px auto;
 
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
 }
 
 
@@ -66,10 +72,13 @@ h1 {font-size:32px;}
 li {font-size:15px;}
 
 .file-btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* ←画像と文字の間隔 */
     padding: 10px 20px;
     background-color: #393939;
     color: white;
+    border: 2px solid #555;
     border-radius: 8px;
     cursor: pointer;
 
@@ -80,12 +89,13 @@ li {font-size:15px;}
 
 .file-btn:hover {
     background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    color: rgb(59, 59, 59);
 }
 
-.output-btn {
-    position: relative;
-    left: 30px;  /* 右へ30px */
+.btn-icon {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
 }
 
 #sourceClef,
@@ -133,23 +143,15 @@ li {font-size:15px;}
     box-sizing: border-box;
 }
 
-#beforeScore {
-    display:block;
-    width: 80%;
-    max-width: 794px;
-    min-height: 1123px;
 
-    margin: 20px auto;
-    border: 1px solid black;
+
+#beforeScore {
+    display: block;
+    min-height: 1123px;
 }
 
 #afterScore {
-    display:none;
-    width: 80%;
-    max-width: 794px;
+    display: none;
     min-height: 1123px;
-
-    margin: 20px auto;
-    border: 1px solid black;
 }
 
