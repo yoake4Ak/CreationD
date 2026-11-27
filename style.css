@@ -5,6 +5,24 @@
     margin: 0px;
 }
 
+body {
+    background-color: #e8e3e0;
+}
+
+#beforeScore,
+#afterScore {
+    display: block;
+    width: 80%;
+    max-width: 794px;
+    min-height: 1123px;
+
+    margin: 20px auto;
+
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+
 .header {
     position: relative;
     padding: 0px 20px;

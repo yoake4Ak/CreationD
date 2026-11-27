@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="jp">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;750&display=swap" rel="stylesheet">
-    <title>音部変換</title>
+    <title>Clef Convert Shift</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay/build/opensheetmusicdisplay.min.js"></script>
+
 <body>
     <div class="container">
         <header class="header">
             <h1 class="header-title"><a href="#home"> CLC Shift</a></h1>
-            <nav  class="header-nav">
+            <nav class="header-nav">
                 <ul class="header-nav">
                     <select id="sourceClef">
                         <option value="treble">𝄞 Treble</option>
@@ -21,7 +23,7 @@
                         <option value="bass">𝄢 Bass</option>
                     </select>
 
-                        <span class="clef-arrow">→</span>
+                    <span class="clef-arrow">→</span>
 
                     <select id="targetClef">
                         <option value="treble">𝄞 Treble</option>
@@ -33,22 +35,26 @@
                     <li class="nav-list"><a href="#service">Service</a></li>
                     <li class="nav-list"><a href="#contents">Contents</a></li> -->
                     <input type="file" id="fileInput" accept=".mxl" hidden>
-                        <label for="fileInput" class="file-btn">
-                                File Input
-                        </label>
-                    
+                    <label for="fileInput" class="file-btn">
+                        File Input
+                    </label>
+
                     <label for="fileOutput" class="file-btn output-btn">
-                             File Output
+                        File Output
                     </label>
                 </ul>
             </nav>
         </header>
-    <div>
-    <h2></h2>
-        <div id="beforeScore"></div>
+        <div>
+            <h2></h2>
+            <div id="beforeScore"></div>
 
-    <h2></h2>
-        <div id="afterScore"></div>
-    <script src="script.js"></script>
+            <h2></h2>
+            <div id="afterScore"></div>
+            <script src="script.js"></script>
+            <footer class="footer">
+    <p>© 2026 CLC | Clef Trans Converter</p>
+</footer>
 </body>
+
 </html>
