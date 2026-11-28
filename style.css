@@ -83,12 +83,10 @@ body {
 
 /* ナビゲーション配置 */
 .header-nav {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 15px;
+    margin-right: 75px;
 }
 
 /* ナビゲーション間の間隔 */
@@ -124,6 +122,10 @@ li {font-size:15px;}
 .file-btn:hover {
     background-color: #ffffff;
     color: rgb(59, 59, 59);
+}
+
+.output-btn{
+    margin-left: 30px;
 }
 
 /* ボタン内アイコン */
