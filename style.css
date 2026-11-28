@@ -1,20 +1,26 @@
-/* スタイルの初期化 */
-
+/* ブラウザ標準の余白をリセット */
 *{
     padding: 0px;
     margin: 0px;
 }
 
+/*サイト全体の背景色*/
 body {
     background-color: #e8e3e0;
 }
 
+/*タイトルアイコン用（現在未使用）*/
 .title-icon {
     width: 25px;
     height: 25px;
     object-fit: contain;
 }
 
+/* =====================
+   楽譜表示エリア
+===================== */
+
+/* 変換前・変換後共通設定 */
 #beforeScore,
 #afterScore {
     display: block;
@@ -25,15 +31,21 @@ body {
     background-color: white;
 }
 
+/* 初期状態では変換前を表示 */
 #beforeScore {
     display: block;
 }
 
+/* 初期状態では変換後を非表示 */
 #afterScore {
     display: none;
 }
 
+/* =====================
+   ヘッダー
+===================== */
 
+/* ヘッダー全体 */
 .header {
     position: relative;
     padding: 0px 20px;
@@ -44,6 +56,7 @@ body {
     justify-content: space-between;
 }
 
+/* ヘッダー内リンク */
 .header a {
     text-decoration: none; /* リンクの下線の無効化 */
     color: #fff;
@@ -51,6 +64,7 @@ body {
     
 }
 
+/* タイトル */
 .header-title {
     font-family: 'Cinzel', serif;
     font-weight: 750;
@@ -59,6 +73,15 @@ body {
 
 }
 
+/* サブタイトル */
+.subtitle {
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+/* ナビゲーション配置 */
 .header-nav {
     position: absolute;
     left: 50%;
@@ -68,18 +91,23 @@ body {
     gap: 15px;
 }
 
-
+/* ナビゲーション間の間隔 */
 .nav-list {
-  margin-left: 55px; /* ナビゲーション間の間隔 */
+  margin-left: 55px; 
 }
 
+/* 見出しサイズ */
 h1 {font-size:32px;}
+
+/* リスト文字サイズ */
 li {font-size:15px;}
 
+
+/* ファイル選択ボタン */
 .file-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px; /* ←画像と文字の間隔 */
+    gap: 8px;/* 画像と文字の間隔 */
     padding: 10px 20px;
     background-color: #393939;
     color: white;
@@ -92,17 +120,24 @@ li {font-size:15px;}
     right: -30px; /* 左へ30px移動 */
 }
 
+/* ホバー時 */
 .file-btn:hover {
     background-color: #ffffff;
     color: rgb(59, 59, 59);
 }
 
+/* ボタン内アイコン */
 .btn-icon {
     width: 25px;
     height: 25px;
     object-fit: contain;
 }
 
+/* =====================
+   音部選択プルダウン
+===================== */
+
+/* 音部選択欄 */
 #sourceClef,
 #targetClef {
     background-color: #393939;
@@ -121,18 +156,21 @@ li {font-size:15px;}
     transition: 0.3s;
 }
 
+/* マウスを乗せたとき */
 #sourceClef:hover,
 #targetClef:hover {
     background-color: #ffffff;
     color: #000000;
 }
 
+/* 選択中 */
 #sourceClef:focus,
 #targetClef:focus {
     outline: none;
     border-color: #000000;
 }
 
+/* 矢印記号 */
 .clef-arrow {
     color: white;
     font-weight: 400;
@@ -140,7 +178,7 @@ li {font-size:15px;}
     margin: 0 10px;
 }
 
-
+/* 音部選択欄とボタンの高さを統一 */
 #sourceClef,
 #targetClef,
 .file-btn {
@@ -148,6 +186,11 @@ li {font-size:15px;}
     box-sizing: border-box;
 }
 
+/* =====================
+   フッター
+===================== */
+
+/* フッター全体 */
 .footer {
     height: 80px;
     background-color: rgb(59, 59, 59); /* ヘッダーと同じ色 */
