@@ -1,23 +1,19 @@
 // file選択ボタン取得
-const fileInput =
-    document.getElementById("fileInput");
+const fileInput = document.getElementById("fileInput");
 
 // 変換前のxml楽譜の表示エリア取得
-const beforeScore =
-    document.getElementById("beforeScore");
+const beforeScore = document.getElementById("beforeScore");
 
 // 変換後のxml楽譜の表示エリア取得
-const afterScore =
-    document.getElementById("afterScore");
+const afterScore = document.getElementById("afterScore");
 
 // 変換前のOSMD準備
-const beforeOsmd =
-    new opensheetmusicdisplay.OpenSheetMusicDisplay("beforeScore");
+const beforeOsmd = new opensheetmusicdisplay.OpenSheetMusicDisplay("beforeScore");
 
 // 変換後のOSMD準備
 const afterOsmd =
-        new opensheetmusicdisplay.OpenSheetMusicDisplay("afterScore", {
-        pageFormat: "A4_P",autoResize: false,newPageFromXML: false
+    new opensheetmusicdisplay.OpenSheetMusicDisplay("afterScore", {
+        pageFormat: "A4_P", autoResize: false, newPageFromXML: false
     });
 
 //変換元
@@ -36,7 +32,7 @@ let currentXml = "";
 //ト音の変換パターン(完成済み)
 function convertFromTreble(xmlText, target) {
 
-    const doc = new DOMParser().parseFromString(xmlText,"application/xml");
+    const doc = new DOMParser().parseFromString(xmlText, "application/xml");
 
     let sign = "G";
     let line = "2";
@@ -83,10 +79,10 @@ function convertFromTreble(xmlText, target) {
         .serializeToString(doc);
 }
 
-//ハ音の変換パターン（未調整）
+//ハ音の変換パターン
 function convertFromAlto(xmlText, target) {
 
-    const doc = new DOMParser().parseFromString(xmlText,"application/xml");
+    const doc = new DOMParser().parseFromString(xmlText, "application/xml");
 
     let sign = "G";
     let line = "2";
@@ -133,10 +129,10 @@ function convertFromAlto(xmlText, target) {
         .serializeToString(doc);
 }
 
-//ヘ音の変換パターン（未調整）
+//ヘ音の変換パターン
 function convertFromBass(xmlText, target) {
 
-    const doc = new DOMParser().parseFromString(xmlText,"application/xml");
+    const doc = new DOMParser().parseFromString(xmlText, "application/xml");
 
     let sign = "G";
     let line = "2";
@@ -200,18 +196,18 @@ function getOctaveLabel(source, target) {
 
 // PDF出力処理
 async function exportPDF() {
-   // OSMDが生成したページを取得
+    // OSMDが生成したページを取得
     const pages = [...afterScore.children];
     // PDF作成用のライブラリjsPDFを準備
     const { jsPDF } = window.jspdf;
     // A4縦向き、mm単位の用紙設定
-    const pdf = new jsPDF({orientation: "portrait",unit: "mm",format: "a4"});
-     // A4用紙のサイズ
+    const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    // A4用紙のサイズ
     const pageWidth = pdf.internal.pageSize.getWidth();
     // 余白
     const margin = 12;
     // 楽譜の表示サイズ
-    const imgWidth = pageWidth - margin * 2;    
+    const imgWidth = pageWidth - margin * 2;
     // ページごとにSVGをPDFに追加
     for (let i = 0; i < pages.length; i++) {
 
@@ -220,7 +216,7 @@ async function exportPDF() {
 
         // SVGの縦横比を取得
         const viewBox = svg.viewBox.baseVal;
-        const imgHeight =imgWidth * (viewBox.height / viewBox.width);
+        const imgHeight = imgWidth * (viewBox.height / viewBox.width);
 
         // 2ページ目以降は新しいPDFページを追加
         if (i > 0) {
@@ -237,10 +233,10 @@ async function exportPDF() {
 
         //オクターブ表示
         if (i === 0) {
-            pdf.setFontSize(33);
+            pdf.setFontSize(15);
             pdf.setTextColor(0, 0, 0);
 
-            const octaveLabel = getOctaveLabel(sourceClef.value,targetClef.value);
+            const octaveLabel = getOctaveLabel(sourceClef.value, targetClef.value);
 
             pdf.text(octaveLabel, 22, 33);
         }
@@ -260,10 +256,10 @@ fileOutput.addEventListener("click", exportPDF);
 
 // 変換前ボタンが押されたら変換前の楽譜を表示する
 // 左のプルダウンに変更があったときに楽譜を表示
-sourceClef.addEventListener("change", function() {
+sourceClef.addEventListener("change", function () {
     beforeScore.style.display = "block";//変換前表示
     afterScore.style.display = "none";//変換後非表示
-  
+
 });
 
 
@@ -289,43 +285,28 @@ fileInput.addEventListener("change", async function (e) {
     // 楽譜本体のXMLを文字列として取得する
     const xmlText =
         await zip.files[xmlName].async("string");
-        currentXml = xmlText;
+    currentXml = xmlText;
     console.log(xmlText);
 
     // =====================
     // 変換前表示
     // =====================
-    beforeScore.style.display = "block"; 
-    afterScore.style.display = "none";   
+    beforeScore.style.display = "block";
+    afterScore.style.display = "none";
 
     await beforeOsmd.load(xmlText);
     beforeOsmd.render();
 
 });
 
-targetClef.addEventListener("change",async function () {
+targetClef.addEventListener("change", async function () {
 
-        if (!currentXml) return;
-        
-        // ト音が選択された場合
-        if (sourceClef.value === "treble") {
+    if (!currentXml) return;
 
-        const convertedXml = convertFromTreble(currentXml,targetClef.value);
+    // ト音が選択された場合
+    if (sourceClef.value === "treble") {
 
-        afterScore.style.display = "block";
-
-        await afterOsmd.load(convertedXml);
-
-        afterOsmd.render();
-
-        beforeScore.style.display = "none";
-        
-        }
-
-        // ハ音が選択された場合
-        if (sourceClef.value === "alto") {
-
-        const convertedXml = convertFromAlto(currentXml,targetClef.value);
+        const convertedXml = convertFromTreble(currentXml, targetClef.value);
 
         afterScore.style.display = "block";
 
@@ -334,23 +315,38 @@ targetClef.addEventListener("change",async function () {
         afterOsmd.render();
 
         beforeScore.style.display = "none";
-        
-        }
 
-        // ヘ音が選択された場合
-        if (sourceClef.value === "bass") {
-
-        const convertedXml = convertFromBass(currentXml,targetClef.value);
-
-        afterScore.style.display = "block";
-
-        await afterOsmd.load(convertedXml);
-
-        afterOsmd.render();
-
-        beforeScore.style.display = "none";
-        
-        }
     }
+
+    // ハ音が選択された場合
+    if (sourceClef.value === "alto") {
+
+        const convertedXml = convertFromAlto(currentXml, targetClef.value);
+
+        afterScore.style.display = "block";
+
+        await afterOsmd.load(convertedXml);
+
+        afterOsmd.render();
+
+        beforeScore.style.display = "none";
+
+    }
+
+    // ヘ音が選択された場合
+    if (sourceClef.value === "bass") {
+
+        const convertedXml = convertFromBass(currentXml, targetClef.value);
+
+        afterScore.style.display = "block";
+
+        await afterOsmd.load(convertedXml);
+
+        afterOsmd.render();
+
+        beforeScore.style.display = "none";
+
+    }
+}
 );
 
