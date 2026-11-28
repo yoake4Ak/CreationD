@@ -1,6 +1,6 @@
 /* スタイルの初期化 */
 
-* {
+*{
     padding: 0px;
     margin: 0px;
 }
@@ -21,11 +21,16 @@ body {
     width: 80%;
     max-width: 794px;
     min-height: 1123px;
-
     margin: 20px auto;
-
     background-color: white;
-    border: 1px solid #000000;
+}
+
+#beforeScore {
+    display: block;
+}
+
+#afterScore {
+    display: none;
 }
 
 
@@ -141,18 +146,6 @@ li {font-size:15px;}
 .file-btn {
     height: 42px;
     box-sizing: border-box;
-}
-
-
-
-#beforeScore {
-    display: block;
-    min-height: 1123px;
-}
-
-#afterScore {
-    display: none;
-    min-height: 1123px;
 }
 
 .footer {
