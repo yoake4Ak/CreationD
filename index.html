@@ -18,24 +18,27 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="header-title"><a href="#home"> CLC Shift</a></h1>
+            <h1 class="header-title">
+                <a href="#home"> CLC Shift</a>
+                <span class="subtitle">MXL 音部変換サイト</span>
+            </h1>
             <!--<img src="images/app.svg" class="title-icon">-->
             <nav class="header-nav">
                 <ul class="header-nav">
                     <select id="sourceClef">
-                        <option value="" selected disabled>Before</option>
-                        <option value="treble">𝄞 Treble</option>
-                        <option value="alto">𝄡 Alto</option>
-                        <option value="bass">𝄢 Bass</option>
+                        <option value="" selected disabled>変換前</option>
+                        <option value="treble">𝄞 ト音</option>
+                        <option value="alto">𝄡 ハ音</option>
+                        <option value="bass">𝄢 ヘ音</option>
                     </select>
 
                     <span class="clef-arrow">→</span>
 
                     <select id="targetClef">
-                        <option value="" selected disabled>After</option>
-                        <option value="treble">𝄞 Treble</option>
-                        <option value="alto">𝄡 Alto</option>
-                        <option value="bass">𝄢 Bass</option>
+                        <option value="" selected disabled>変換後</option>
+                        <option value="treble">𝄞 ト音</option>
+                        <option value="alto">𝄡 ハ音</option>
+                        <option value="bass">𝄢 ヘ音</option>
                     </select>
 
                     <!-- <li class="nav-list"><a href="#about">About</a></li> 
@@ -44,23 +47,23 @@
                     <input type="file" id="fileInput" accept=".mxl" hidden>
                     <label for="fileInput" class="file-btn">
                         <img src="images/open.svg" class="btn-icon">
-                        File Input
+                        ファイルを開く
                     </label>
 
 
                     <label id="fileOutput" class="file-btn output-btn">
                         <img src="images/download.svg" class="btn-icon">
-                        Download
+                        PDF ダウンロード
                     </label>
                 </ul>
             </nav>
         </header>
         <div>
             <h2></h2>
-                <div id="beforeScore"></div>
+            <div id="beforeScore"></div>
 
             <h2></h2>
-                <div id="afterScore"></div>
+            <div id="afterScore"></div>
             <script src="script.js"></script>
             <footer class="footer">
                 <p>© 2026 CLC | Clef Convert Shift</p>
